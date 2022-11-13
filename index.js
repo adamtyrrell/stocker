@@ -5,10 +5,8 @@ const PORT = 8000;
 const app = express();
 const url = 'https://www.google.com/finance/quote/AMC:NYSE?hl=en';
 const priceData = require('./jsonFile.json');
-let run = true;
 
 function pullData(){
-    run = false;
     axios(url)
         .then(response => {
             const html = response.data;
@@ -31,17 +29,10 @@ function pullData(){
             })
 
             console.log(prices);
-            run = true;
-            initial();
         }).catch(err => console.log(err));
     }
 
-function initial(){
-    if(run){
-        pullData();
-    }
-}
-initial();
+pullData();
 
 app.get("/", (req, res) => {
  res.send("ello mate");
